@@ -3,7 +3,6 @@ package dennis.practice.stone;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -21,7 +20,7 @@ public class Lexer {
         this.reader = new LineNumberReader(reader);
     }
     
-    public Token read() {
+    public Token read() throws ParseException {
         if(fillQueue(0)) {
             return queue.remove(0);
         }
@@ -29,7 +28,7 @@ public class Lexer {
         return Token.EOF;
     }
     
-    private boolean fillQueue(int i) {
+    private boolean fillQueue(int i) throws ParseException {
         while(i >= queue.size()) {
             if(hasMore) {
                 readLine();
@@ -41,7 +40,7 @@ public class Lexer {
         return true;
     }
     
-    private void readLine() {
+    private void readLine() throws ParseException {
         String line;
         try {
             line = reader.readLine();
@@ -66,7 +65,7 @@ public class Lexer {
                 addToken(lineNo, matcher);
                 pos = matcher.end();
             } else {
-                throw ParseException("bad token at line " + lineNo);
+                throw new ParseException("bad token at line " + lineNo);
             }
         }
         

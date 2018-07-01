@@ -1,5 +1,4 @@
 package dennis.practice.stone;
-
 import java.io.IOException;
 
 public class ParseException extends Exception {
@@ -13,6 +12,14 @@ public class ParseException extends Exception {
         super("syntax error around " + location(token) + ". " + msg);
     }
 
+    public ParseException(IOException e) {
+        super(e);
+    }
+    
+    public ParseException(String msg) {
+        super(msg);
+    }
+    
     private static String location(Token token) {
         if (token == Token.EOF) {
             return "the last line";
@@ -21,11 +28,4 @@ public class ParseException extends Exception {
         }
     }
     
-    public ParseException(IOException e) {
-        super(e);
-    }
-
-    public ParseException(String msg) {
-        super(msg);
-    }
 }
